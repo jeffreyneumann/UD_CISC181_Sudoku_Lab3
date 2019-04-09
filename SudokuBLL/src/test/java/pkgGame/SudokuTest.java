@@ -2,12 +2,19 @@ package pkgGame;
 
 import static org.junit.Assert.*;
 
+import java.lang.Class;
+
 import java.util.Arrays;
 
 import org.junit.Test;
 
+import pkgGame.Sudoku;
+
 public class SudokuTest {
-/*
+
+	
+
+	
 	@Test
 	public void Sudoku_Test1() {
 
@@ -229,7 +236,7 @@ public class SudokuTest {
 			fail("Test failed to build a Sudoku");
 		}
 		
-	}	*/
+	}	
 
 	@Test
 	public void TestRegionNbr()
@@ -257,5 +264,101 @@ public class SudokuTest {
 		
 		assertTrue(Arrays.equals(Region5, s1.getRegion(5)));
 		
+	}
+	
+	
+
+	
+	@Test
+	public void shuffleArrayTest() {
+
+		
+		int[][] puzzle = { 
+				{ 5, 3, 4, 6, 7, 8, 9, 1, 2 }, 
+				{ 6, 7, 2, 1, 9, 5, 3, 4, 8 }, 
+				{ 1, 9, 8, 3, 4, 2, 5, 6, 7 },
+				{ 8, 5, 9, 7, 6, 1, 4, 2, 3 }, 
+				{ 4, 2, 6, 8, 5, 3, 7, 9, 1 }, 
+				{ 7, 1, 3, 9, 2, 4, 8, 5, 6 },
+				{ 9, 6, 1, 5, 3, 7, 2, 8, 4 }, 
+				{ 2, 8, 7, 4, 1, 9, 6, 3, 5 }, 
+				{ 3, 4, 5, 2, 8, 6, 1, 7, 9 } };
+		int[] array = { 5, 5, 5, 6, 7, 8, 9, 1, 2 };
+		
+		try {
+			Sudoku s1 = new Sudoku(puzzle);
+			s1.shuffleArray(array);
+			
+		} catch (Exception e) {
+			fail("Bad shuffleArray");
+		}
+	}
+	
+	@Test
+	public void TestRegionNbr2(){
+		Sudoku s1= null;
+		int[][] puzzle = { 
+				{ 5, 3, 4, 6, 7, 8, 9, 1, 2 }, 
+				{ 6, 7, 2, 1, 9, 5, 3, 4, 8 }, 
+				{ 1, 9, 8, 3, 4, 2, 5, 6, 7 },
+				{ 8, 5, 9, 7, 6, 1, 4, 2, 3 }, 
+				{ 4, 2, 6, 8, 5, 3, 7, 9, 1 }, 
+				{ 7, 1, 3, 9, 2, 4, 8, 5, 6 },
+				{ 9, 6, 1, 5, 3, 7, 2, 8, 4 }, 
+				{ 2, 8, 7, 4, 1, 9, 6, 3, 5 }, 
+				{ 3, 4, 5, 2, 8, 6, 1, 7, 9 } };
+
+		int [] Region5 = {4,2,3,7,9,1,8,5,6};
+		try {
+			 s1 = new Sudoku(puzzle);
+		} catch (Exception e) {
+			fail("Bad Sudoku");
+		}
+		assertTrue(Arrays.equals(Region5, s1.getRegion(5)));
+	}
+	
+	@Test
+
+	public void TestGetRegionNbr() {
+
+		Sudoku s1= null;
+		int[][] puzzle = { 
+				{ 5, 3, 4, 6, 7, 8, 9, 1, 2 }, 
+				{ 6, 7, 2, 1, 9, 5, 3, 4, 8 }, 
+				{ 1, 9, 8, 3, 4, 2, 5, 6, 7 },
+				{ 8, 5, 9, 7, 6, 1, 4, 2, 3 }, 
+				{ 4, 2, 6, 8, 5, 3, 7, 9, 1 }, 
+				{ 7, 1, 3, 9, 2, 4, 8, 5, 6 },
+				{ 9, 6, 1, 5, 3, 7, 2, 8, 4 }, 
+				{ 2, 8, 7, 4, 1, 9, 6, 3, 5 }, 
+				{ 3, 4, 5, 2, 8, 6, 1, 7, 9 } };
+
+		try {
+			 s1 = new Sudoku(puzzle);
+		} catch (Exception e) {
+			fail("Bad Sudoku");
+		}
+		int Region3 = 1;
+		int nExpected = Region3;
+		int nActual = s1.getRegionNbr(3,0);
+		assertEquals(nExpected, nActual);
+	}
+	
+	@Test
+	public void test_FillDiagonalRegions() throws Exception{
+		int[][] zeroPuzzle = {{0,0,0,0,0,0,0,0,0},
+				  {0,0,0,0,0,0,0,0,0},
+				  {0,0,0,0,0,0,0,0,0},
+				  {0,0,0,0,0,0,0,0,0},
+				  {0,0,0,0,0,0,0,0,0},
+				  {0,0,0,0,0,0,0,0,0},
+				  {0,0,0,0,0,0,0,0,0},
+				  {0,0,0,0,0,0,0,0,0},
+				  {0,0,0,0,0,0,0,0,0}};
+		
+		Sudoku puz = new Sudoku(zeroPuzzle);
+		puz.FillDiagonalRegions();
+		//puz.PrintPuzzle();
+		assertTrue(puz.isPartialSudoku());
 	}
 }

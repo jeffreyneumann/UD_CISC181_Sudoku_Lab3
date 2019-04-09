@@ -1,8 +1,12 @@
 package pkgGame;
 
 import pkgEnum.ePuzzleViolation;
+
 import pkgHelper.LatinSquare;
+
 import pkgHelper.PuzzleViolation;
+
+import java.util.*;
 
 /**
  * Sudoku - This class extends LatinSquare, adding methods, constructor to
@@ -271,4 +275,80 @@ public class Sudoku extends LatinSquare {
 		
 		return true;
 	}
+	
+	public void shuffleArray(int[] ar) {
+		List<Integer> arList = new ArrayList<>();
+		for (int i = 0; i < ar.length; i++) {
+		    arList.add(ar[i]);
+		}
+		Collections.shuffle(arList);
+		
+		for (int i = 0; i < ar.length; i++) {
+		    ar[i] = arList.get(i);
+		}	
+	}
+	
+	public void PrintPuzzle() {
+		for(int i = 0; i < getPuzzle().length; i++) {
+			for(int j = 0; j < getPuzzle().length; j++) {
+				System.out.print(getPuzzle()[i][j] + " ");
+			}
+			System.out.println("");
+		}
+	}
+	
+	public void shuffleRegion(int r) {	
+
+		int[] reg = getRegion(r);
+
+		shuffleArray(reg);
+
+	
+
+		int iCount = 0;
+
+		
+
+		for (int i = (r / iSqrtSize) * iSqrtSize; i < (r / iSqrtSize) * iSqrtSize + iSqrtSize; i++) {
+
+			for (int j = (r % iSqrtSize) * iSqrtSize; j < (r % iSqrtSize) * iSqrtSize + iSqrtSize; j++) {
+
+				this.getPuzzle()[i][j] = reg[iCount++];
+
+			}
+
+		}
+
+	}
+	public int getRegionNbr(int iCol, int iRow) {
+		int number = ((iRow / iSqrtSize) * iSqrtSize) + (iCol / iSqrtSize);
+		return number;
+	}
+	
+	public void FillDiagonalRegions() {
+
+		for (int i=0; i < iSize; i = i + iSqrtSize) {
+
+			setRegion(getRegionNbr(i,i));
+
+			shuffleRegion(getRegionNbr(i,i));
+
+		}
+
+	}
+	
+	public void setRegion (int r) {
+		
+		int i;
+		int j;
+		int numberFiller = this.getPuzzle().length;
+		
+		for (i=(r / iSqrtSize) * iSqrtSize; i < (r / iSqrtSize) * iSqrtSize + iSqrtSize; i++ ) {
+			for (j=(r % iSqrtSize) * iSqrtSize; j < (r % iSqrtSize) * iSqrtSize + iSqrtSize; j++) {
+				this.getPuzzle()[i][j] = numberFiller;
+				numberFiller--;
+			}
+		}
+	}
+
 }
